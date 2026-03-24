@@ -1,0 +1,30 @@
+# fly.toml app configuration file generated for ubunty-aged-sun-8469 on 2023-12-05T12:37:20-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "ta-launch-test"
+primary_region = "iad"
+kill_timeout = "5s"
+kill_signal = "SIGHUP"
+
+[build]
+dockerfile = "kickerfile"
+
+
+[http_service]
+  internal_port = 8008
+  force_https = false
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "1s"
+    method = "GET"
+    path = "/"
+  [http_service.concurrency]
+  soft_limit = 100
+  hard_limit = 1000
